@@ -1,6 +1,6 @@
 # Launchpad API (Express + Prisma)
 
-This repository contains the backend implementation for the Launchpad idea validation platform. It was built using Express, Prisma (SQLite for development), and JWT-based authentication with refresh/access tokens.
+This repository contains the backend implementation for the Launchpad idea validation platform. It was built using Express, Prisma (postgres), and JWT-based authentication with refresh/access tokens.
 
 ## Features
 
@@ -41,14 +41,14 @@ A simple enum `Role` distinguishes `USER` from `ADMIN`.
    pnpm prisma:migrate
    pnpm prisma:generate
    ```
-   (SQLite database will be created at `./dev.db`.)
+   
 
 4. **Start the server**
    ```sh
    pnpm dev
    ```
 
-The API will be available at `http://localhost:4000/api`.
+The API will be available at `https://lauchpad-api.onrender.com/api`.
 
 ## Deployment
 

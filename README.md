@@ -48,7 +48,7 @@ A simple enum `Role` distinguishes `USER` from `ADMIN`.
    pnpm dev
    ```
 
-The API will be available at `https://lauchpad-api.onrender.com/api`.
+The API will be available at `https://localhost:3000/api`.
 
 ## Deployment
 
@@ -57,8 +57,7 @@ For production, switch the Prisma datasource to a managed PostgreSQL and set env
 ## Architectural Notes
 
 - **Separation of concerns**: routers delegate to controllers; middleware handles authentication/authorization.
-- **Extensibility**: additional features (e.g. notifications, attachments) can be added by expanding the Prisma schema and corresponding controllers.
-- **Scalability**: relational design and indexing (implicit via PKs) support large numbers of ideas/comments; voting counts are derived at query time but could be cached or aggregated with triggers for high load.
+
 - **Security**: password hashing with bcrypt; JWTs signed with secrets stored in env; refresh tokens persisted for revocation. RBAC ensures only privileged users can modify categories.
 
 ## API Documentation

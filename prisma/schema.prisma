@@ -1,0 +1,88 @@
+// SQLite chosen for simplicity during challenge development
+// Swap provider to "postgresql" and update DATABASE_URL in .env for production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Keep `url` here for compatibility with the installed Prisma CLI (v5.x).
+  // If you upgrade to Prisma v7+ you can move the connection URL to `prisma.config.ts`.
+  url = env("DATABASE_URL")
+}
+
+// NOTE: Connection URLs were moved to `prisma.config.ts` per Prisma v7.
+// Migrate and the Prisma CLI will read the datasource URL from that file
+// (or from the environment). The runtime PrismaClient should be created
+// with an `adapter` or `accelerateUrl` option in your application code.
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  name          String?
+  role          Role           @default(USER)
+  ideas         Idea[]
+  comments      Comment[]
+  votes         Vote[]
+  refreshTokens RefreshToken[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Idea {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  comments    Comment[]
+  votes       Vote[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  ideas Idea[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  idea      Idea     @relation(fields: [ideaId], references: [id])
+  ideaId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  idea      Idea     @relation(fields: [ideaId], references: [id])
+  ideaId    Int
+  createdAt DateTime @default(now())
+
+  @@unique([userId, ideaId])
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

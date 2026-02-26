@@ -1,0 +1,40 @@
+{
+  "name": "DRID",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "prestart": "pnpm prisma migrate deploy",
+    "dev": "nodemon src/index.js",
+    "predev": "pnpm prisma migrate dev",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
+    "lint": "eslint .",
+    "seed": "node src/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.0",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.4.1",
+    "@prisma/client": "^5.7.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^5.2.1",
+    "express-validator": "^6.15.0",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.19.0",
+    "schema-utils": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.16.0",
+    "nodemon": "^3.1.14",
+    "prisma": "^5.7.0"
+  }
+}

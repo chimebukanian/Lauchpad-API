@@ -49,6 +49,11 @@ A simple enum `Role` distinguishes `USER` from `ADMIN`.
    ```
 
 The API will be available at `https://localhost:3000/api`.
+5. **Admin Login***
+   ```sh
+   Email: admin@launchpad.com
+   password: admin123
+   ```
 
 ## Deployment
 
